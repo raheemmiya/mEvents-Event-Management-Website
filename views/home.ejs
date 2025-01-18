@@ -1,124 +1,145 @@
 <%-include('partials/head')%>
 
-<body class="font-mainFont">
-  <!-- navbar goes here -->
-  <%-include('partials/navBar', { user: user })%> 
+  <body class="font-mainFont">
+    <!-- navbar goes here -->
+    <%-include('partials/navBar', { user: user })%>
 
-    <!-- main body begins here -->
+      <!-- main body begins here -->
 
-    <main>
+      <main>
 
-      <!-- Image Curosel -->
-      <div>
-        <img
-          src="https://cdn.evbstatic.com/s3-build/fe/build/images/427ab8dca801f117ae14301b994842b2-nye_citybrowse_desktop.webp"
-          alt="">
-      </div>
-
-
-      <!-- Thing to do  -->
-      <div class="pt-10 flex h-48 mx-4 justify-around ">
-
-        <div class="things-to-do">
-          <img src="https://img.icons8.com/?size=100&id=GsyiBOi7Vvwx&format=png&color=000000" alt="">
-          <a href="#">Music</a>
-        </div>
-
-        <div class="things-to-do">
-          <img src="https://img.icons8.com/?size=100&id=9899&format=png&color=000000" alt="">
-          <a href="#">Travels</a>
-        </div>
-
-        <div class="things-to-do">
-          <img src="https://img.icons8.com/?size=100&id=25777&format=png&color=000000" alt="">
-          <a href="#">NightLife</a>
-        </div>
-
-        <div class="things-to-do">
-          <img src="https://img.icons8.com/?size=100&id=40314&format=png&color=000000" alt="">
-          <a href="#">Visual Arts</a>
-        </div>
-
-        <div class="things-to-do">
-          <img src="https://img.icons8.com/?size=100&id=bzVMu2YNNsJe&format=png&color=000000" alt="">
-          <a class="text-sm" href="#">Food and Drinks</a>
-        </div>
-
-        <div class="things-to-do">
-          <img src="https://img.icons8.com/?size=100&id=hEgfswYPGvHh&format=png&color=000000" alt="">
-          <a href="#">Landscapes</a>
-        </div>
-      </div>
-
-      <!-- Browsing events label -->
-      <div
-        class="flex border-t-2 border-b-2 w-100% pt-5 pb-5 mt-5 mb-5 font-mainFont text-xl justify-center content-center">
-        <label for=""> Browsing events in: </label>
+        <!-- Image Curosel -->
         <div>
-          <select name="" id="">
-            <option value="" selected>Nepal</option>
-            <option value="">India</option>
-            <option value="">Singapore</option>
-            <option value="">Australia</option>
-            <option value="">China</option>
-          </select>
+          <img
+            src="https://cdn.evbstatic.com/s3-build/fe/build/images/427ab8dca801f117ae14301b994842b2-nye_citybrowse_desktop.webp"
+            alt="">
         </div>
-      </div>
 
-      <!-- Specific Events -->
-      <div class="pb-4 w-full h-full">
-        <h2 class="font-mainFont font-bold text-2xl pl-96">Events in Nepal</h2>
-        
-        <!-- container of the events -->
-        <div class="flex  w-full h-full flex-wrap justify-start content-start gap-4 px-64">
 
-          <% for(let i = 0; i < totalEvents.length; i++) { %>
-            <!-- events section -->
-            <%-include('partials/specific-events', {event: totalEvents[i]}) %>
-          <% } %>
+        <!-- Thing to do  -->
+        <div class="pt-10 flex h-48 mx-4 justify-around ">
+
+          <div class="things-to-do">
+            <img src="https://img.icons8.com/?size=100&id=GsyiBOi7Vvwx&format=png&color=000000" alt="">
+            <a href="#">Music</a>
+          </div>
+
+          <div class="things-to-do">
+            <img src="https://img.icons8.com/?size=100&id=9899&format=png&color=000000" alt="">
+            <a href="#">Travels</a>
+          </div>
+
+          <div class="things-to-do">
+            <img src="https://img.icons8.com/?size=100&id=25777&format=png&color=000000" alt="">
+            <a href="#">NightLife</a>
+          </div>
+
+          <div class="things-to-do">
+            <img src="https://img.icons8.com/?size=100&id=9110&format=png&color=000000" alt="">
+            <a href="#">Tech</a>
+          </div>
+
+          <div class="things-to-do">
+            <img src="https://img.icons8.com/?size=100&id=8951&format=png&color=000000" alt="">
+            <a class="text-sm" href="#">Conference</a>
+          </div>
+
+          <div class="things-to-do">
+            <img src="https://img.icons8.com/?size=100&id=hEgfswYPGvHh&format=png&color=000000" alt="">
+            <a href="#">Landscapes</a>
+          </div>
+        </div>
+
+        <!-- Browsing events label -->
+         <form id="countryForm" action="/home" method="post">
+
+           <div class="flex border-t-2 border-b-2 w-100% pt-5 pb-5 mt-5 mb-5 font-mainFont text-xl justify-center content-center">
+             <label for="country"> Browsing events in: </label>
+             <div>
+               <select name="country" id="countries">
+                 <option value="Nepal" selected>Nepal</option>
+                <% availableCountryNames.forEach(country=>{ %>
+                 <option value="<%=country%>"><%=country%></option>
+                    <% }) %>
+                </select>
+              </div>
+            </div>
+          </form>
+
+          <!-- // Script to reload the page when an option is selected -->
+          <script>
+            document.getElementById('countries').addEventListener('change', function() {
+              document.getElementById('countryForm').submit();
+            });
+          </script>
+
+
+        <!-- Specific Events -->
+        <div class="pb-4 w-full h-full">
+          <h2 class="font-mainFont font-bold text-2xl pl-96">Events in Nepal</h2>
+
+          <!-- container of the events -->
+          <div class="flex  w-full h-full flex-wrap justify-start content-start gap-4 px-64">
+
+            <% for(let i=0; i < totalEvents.length; i++) { %>
+              <!-- events section -->
+              <%-include('partials/specific-events', {event: totalEvents[i]}) %>
+                <% } %>
 
           </div>
 
-      </div>
-
-      <!-- Other Events -->
-      <div class="border-t-2 pt-4 mt-4 pb-4">
-        <h2 class="font-mainFont font-bold text-2xl px-96 pb-4  ">Other Events</h2>
-
-        <!-- events -->
-        <div class="flex content-start justify-start gap-4 px-72">
-          <%-include('partials/other-events') %>
-          <%-include('partials/other-events') %>
-          <%-include('partials/other-events') %>
-          <%-include('partials/other-events') %>
-          <%-include('partials/other-events') %>
-
         </div>
-        <div class="text-center">
-          <button class="border-green-800 border-2 px-32 py-3 hover:bg-slate-100 transition-all duration-300 mt-6"
-            type="submit">See more</button>
+
+        <!-- Other Events -->
+        <div class="border-t-2 pt-4 mt-4 pb-4">
+          <h2 class="font-mainFont font-bold text-2xl px-96 pb-4  ">Other Events</h2>
+
+          <!-- events -->
+          <!-- <div class="flex content-start justify-start gap-4 px-72"> -->
+            <!-- <%-include('partials/other-events') %>
+              <%-include('partials/other-events') %>
+                <%-include('partials/other-events') %>
+                  <%-include('partials/other-events') %>
+                    <%-include('partials/other-events') %> -->
+          <!-- </div> -->
+
+          <!-- container of the events -->
+          <div class="flex  w-full h-full flex-wrap justify-start content-start gap-4 px-64">
+
+            <% for(let i=0; i < totalEvents.length; i++) { %>
+              <!-- events section -->
+              <%-include('partials/specific-events', {event: totalEvents[i]}) %>
+                <% } %>
+
+          </div>
+
+
+          <div class="text-center">
+            <button class="border-green-800 border-2 px-32 py-3 hover:bg-slate-100 transition-all duration-300 mt-6"
+              type="submit">See more</button>
+          </div>
         </div>
-      </div>
 
-      <!-- Popular cities -->
-      <div class="border-t-2 pt-4 h-48 bg-slate-100">
-        <h2 class="font-mainFont font-bold text-2xl pl-96 pb-4 ">Popular destinations</h2>
-        <div class="w-50% flex content-center justify-center">
-          <button class="things-to-do-btn" type="submit">Things to do in Nepal</button>
-          <button class="things-to-do-btn" type="submit">Things to do in India</button>
-          <button class="things-to-do-btn" type="submit">Things to do in China</button>
-          <button class="things-to-do-btn" type="submit">Things to do in Africa</button>
-          <button class="things-to-do-btn" type="submit">Things to do in Argentina</button>
-          <button class="things-to-do-btn" type="submit">Things to do in Uganda</button>
+        <!-- Popular cities -->
+        <div class="border-t-2 pt-4 h-48 bg-slate-100">
+          <h2 class="font-mainFont font-bold text-2xl pl-96 pb-4 ">Popular destinations</h2>
+          <div class="w-50% flex content-center justify-center">
+            <button class="things-to-do-btn" type="submit">Things to do in Nepal</button>
+            <button class="things-to-do-btn" type="submit">Things to do in India</button>
+            <button class="things-to-do-btn" type="submit">Things to do in China</button>
+            <button class="things-to-do-btn" type="submit">Things to do in Africa</button>
+            <button class="things-to-do-btn" type="submit">Things to do in Argentina</button>
+            <button class="things-to-do-btn" type="submit">Things to do in Uganda</button>
+          </div>
         </div>
-      </div>
-    </main>
-    <!-- main body ends here -->
+      </main>
+      <!-- main body ends here -->
 
 
-    <!-- footer begins here -->
-    <%-include('partials/footer' , {user:user})%>
+      <!-- footer begins here -->
+      <%-include('partials/footer' , {user:user})%>
 
-</body>
+  </body>
 
-</html>
+
+  </html>

@@ -1,25 +1,26 @@
 const User = require("../model/user");
 const Event = require("../model/events");
 
-exports.homePage = (req, res) => {
-  Event.fetchAll().then((totalEvents) => {
-    User.allUser().then((user) => {
-      if (user) {
-        res.render("home", {
-          pageTitle: "Home",
-          user: user,
-          totalEvents: totalEvents,
-        });
-      } else {
-        res.render("home", {
-          pageTitle: "Home",
-          user: null,
-          totalEvents: totalEvents,
-        });
-      }
+
+exports.homePage = async (req, res) => {
+  try {
+    const totalEvents = await Event.fetchAll();
+    const user = await User.allUser();
+    const availableCountryNames = await Event.getAllEventCountryList();
+
+    res.render("home", {
+      pageTitle: "Home",
+      user: user || null,
+      totalEvents: totalEvents,
+      availableCountryNames:availableCountryNames,
     });
-  });
+
+  } catch (error) {
+    console.error("Error in homePage:", error);
+    res.status(500).render("error", { message: "Something went wrong" });
+  }
 };
+
 
 exports.registerPage = (req, res) => {
   res.render("register", { pageTitle: "Create Account", errorMessage: null });

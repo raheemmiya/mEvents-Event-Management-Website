@@ -11,6 +11,7 @@ exports.createEvent = (req, res)=>{
     const maxAttendees = req.body.maxAttendees;
     const category = req.body.category;
     const eventImage = req.body.eventImage;
+    const country = req.body.country;
 
     
     
@@ -19,11 +20,12 @@ exports.createEvent = (req, res)=>{
         eventDate,
         eventTime,
         location,
+        country,
         description,
         maxAttendees,
         category,
         eventImage,
-        createdBy
+        createdBy,
     )
     
     newEvent.createEvent().then(result=>{ 

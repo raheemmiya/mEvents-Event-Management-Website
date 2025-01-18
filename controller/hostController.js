@@ -1,5 +1,6 @@
 const User = require("../model/user");
-const Event = require('../model/events')
+const Event = require("../model/events");
+const Country = require("../model/country");
 
 exports.loginPage = (req, res) => {
   res.render("login", { pageTitle: "Login", errorMessage: null });
@@ -27,19 +28,20 @@ exports.loginUser = (req, res) => {
     })
     .catch((err) => console.log("User not found", err));
 };
-
-exports.createEventPage = (req, res) => {
+exports.createEventPage = async (req, res) => {
   if (req.params.id) {
-    User.getUserById(req.params.id)
-      .then((user) => {
-        res.render("create-Event", {
-          pageTitle: "Create an Event",
-          user: user,
-        });
-      })
-      .catch((err) => {
-        console.error("Error while fetching the user", err);
+    try {
+      const user = await User.getUserById(req.params.id);
+      const countryList = await Country.getAllCountry();
+
+      res.render("create-Event", {
+        pageTitle: "Create an Event",
+        user: user,
+        countryList: countryList,
       });
+    } catch (err) {
+      console.error("Error while fetching the user", err);
+    }
   } else {
     res.render("login", { pageTitle: "Login", errorMessage: null });
   }
@@ -48,10 +50,9 @@ exports.createEventPage = (req, res) => {
 exports.toLogOut = (req, res) => {
   User.getUserById(req.params.id).then((user) => {
     User.userLog(user);
-    // Event.fetchAll().then(totalEvents=>{ 
+    // Event.fetchAll().then(totalEvents=>{
     //   res.render("home", { pageTitle: "Home Page", user: null, totalEvents:totalEvents });
     // })
-    res.redirect('/home')
+    res.redirect("/home");
   });
 };
-
