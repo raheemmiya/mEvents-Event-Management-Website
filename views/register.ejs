@@ -1,0 +1,56 @@
+<%-include('partials/head')%>
+
+<body class="m-0 p-0 font-mainFont">
+    <div class="flex">
+
+        <!-- form -->
+        <div class="w-1/2 h-screen flex justify-center items-center">
+            <form action="/registering" method="POST">
+                <div class="text-center">
+                    <a href="/home" class="content-center font-extrabold text-orange-600 font-logoFont text-5xl">mEvents</a>
+                    <h1 class="text-6xl font-bold text-left">Create an <br> Account </h1>   
+                </div>
+                <%if(errorMessage){%>
+                    <div class="mt-5 text-center">
+                        <p class="text-red-500"><%=errorMessage%></p>
+                    </div>
+                    <%}%>
+                <div class="mt-10">
+                    <label for="name" class="block text-sm">Full Name</label>
+                    <input type="text" name="name" id="name"
+                        class="w-full p-2 border-2 border-gray-300 rounded-md mt-2">
+                </div>
+                <div class="mt-10">
+                    <label for="description" class="block text-sm">Describe Yourself:</label>
+                    <textarea type="text" name="description" id="description"
+                        class="w-full p-2 border-2 border-gray-300 rounded-md mt-2"></textarea>
+                </div>
+                <div class="mt-10">
+                    <label for="email" class="block text-sm">Email</label>
+                    <input type="email" name="email" id="email"
+                        class="w-full p-2 border-2 border-gray-300 rounded-md mt-2">
+                </div>
+                <div class="mt-5">
+                    <label for="password" class="block text-sm">Password</label>
+                    <input type="password" name="password" id="password"
+                        class="w-full p-2 border-2 border-gray-300 rounded-md mt-2">
+                </div>
+                <div class="mt-5">  
+                    <button type="submit" class="w-full bg-orange-500 text-white p-2 rounded-md transition duration-300 ease-in-out hover:bg-orange-950" >Register</button>
+                </div>
+                <div class="mt-5 text-center">
+                    <a href="/login" class="text-blue-500">Already have account?</a>
+                </div>
+            </form>
+        </div>
+
+
+        <!-- backgound img div -->
+        <div class="h-screen w-1/2">
+            <img class="w-full h-full" src="/static/image//login-page.png" alt="">
+        </div>
+
+
+    </div>
+</body>
+</html>

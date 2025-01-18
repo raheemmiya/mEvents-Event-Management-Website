@@ -1,0 +1,53 @@
+<footer>
+    <div
+        class="h-72 bg-purple-950 text-white p-4 text-sm flex flex-col justify-center content-center align-middle ">
+        <div class="flex justify-around">
+
+            <div class="flex flex-col justify-around">
+                <h2 class="text-xl">mEvents</h2>
+                <% if(typeof user !== 'undefined' && user !== null){ %>
+                    <a href="/createEvent/<%=user._id%>">Create Events </a>
+                    <%} else { %>
+                      <a href="/login">Create Events </a>
+                    <%} %>
+                <a href="#">Pricing</a>
+                <a href="/community-guidelines">Community Guidelines</a>
+                <a href="/our-sponsers">Our Sponsers</a>
+                <a href="/FAQs">FAQs</a>
+            </div>
+
+            <div class="flex flex-col justify-around">
+                <h2 class="text-xl">Plan Events</h2>
+                <a href="#">QR codes for Event Checkins</a>
+                <a href="#">Post Blogs</a>
+                <a href="#">Careers</a>
+                <a href="#">Blog</a>
+            </div>
+
+            <div class="flex flex-col justify-around">
+                <h2 class="text-xl">Find Events</h2>
+                <a href="#">NightLife</a>
+                <a href="#">Street Food and drinks</a>
+                <a href="#">Art Exibitions</a>
+                <a href="#">Landscapes</a>
+                <a href="#">Concerts</a>
+            </div>
+
+            <div class="flex flex-col justify-around">
+                <h2 class="text-xl">About Us</h2>
+                <a href="#">About Us</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Instagram</a>
+                <a href="#">Tiktok</a>
+                <a href="#">Facebook</a>
+            </div>
+
+        </div>
+
+        <div class="text-center py-8">
+            <h2>
+                &copy; 2024 mEvents. All rights reserved.
+            </h2>
+        </div>
+    </div>
+</footer>

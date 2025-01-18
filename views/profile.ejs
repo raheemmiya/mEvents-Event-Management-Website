@@ -1,0 +1,90 @@
+<%-include('partials/head')%>
+
+<body>
+    <!-- navbar goes here -->
+     <%-include('partials/navBar',{ loggedIn: user.isLoggedIn, name:user.name } )%>
+    <!-- Main -->
+    <main>
+        <!-- Main profile -->
+        <div class="h-[80vh] w-full flex justify-center">
+            <!-- style="background-image: url('/static/image/gtr.jpg'); background-size: cover; position:relative"> -->
+
+            <!-- profile -->
+            <div class="shadow-2xl self-center h-[80%] w-[50%] rounded-2xl flex items-center justify-center bg-white ">
+                <div class="flex flex-col justify-center items-center ">
+                    <div class="h-44 w-44 overflow-hidden rounded-full">
+                        <img src="/static/image/profile-picture.jpg" alt="Profile Picture"
+                            class="object-cover h-full w-full">
+                    </div>
+                    <h2 class="mt-4 font-profileFont font-extrabold text-4xl "><%=user.name%></h2>
+                    <div class="text-center mt-4 text-sm font-semibold ">
+                        <button class="bg-blue-700  rounded-md px-9 py-3 text-slate-50" type="submit">Follow</button>
+                        <button class=" px-9 py-3 text-blue-700" type="submit">Contact</button>
+                    </div>
+
+                    <!-- for followers and event counts -->
+                    <div class="flex justify-center items-center mt-4">
+                        <div class="flex justify-center items-center mt-4 flex-col border-r-2 pr-4">
+                            <input value="28" class="bg-white w-20 text-center font-semibold font-mainFont" disabled
+                                type="text" name="followers">
+                            <label class="" for="followers">Followers</label>
+                        </div>
+                        <div class="flex justify-center items-center mt-4 flex-col">
+                            <input value="2" class="bg-white  w-20 text-center font-semibold font-mainFont" disabled
+                                type="text" name="events">
+                            <label class="pl-[18px]" for="events">events</label>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class=" h-auto w-[80%] mt-4">
+                        <p> <%=user.description%></p>
+                    </div>
+
+                    <!-- Socials -->
+                    <div class="my-5 text-center">
+                        <div class=" flex justify-center   items-center space-x-3 ">
+                            <a href=""><img class="h-8 w-8"
+                                    src="https://img.icons8.com/?size=100&id=uLWV5A9vXIPu&format=png&color=000000"
+                                    alt=""></a>
+                            <a href=""><img class="h-8 w-8"
+                                    src="https://img.icons8.com/?size=100&id=Xy10Jcu1L2Su&format=png&color=000000"
+                                    alt=""></a>
+                            <a href=""><img class="h-8 w-8"
+                                    src="https://img.icons8.com/?size=100&id=47745&format=png&color=000000" alt=""></a>
+                            <a href=""><img class="h-8 w-8"
+                                    src="https://img.icons8.com/?size=100&id=13800&format=png&color=000000" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Events Section --> 
+        
+        </div><div class="max-h-[40vh] px-20 py-4 my-10">
+            <h2 class="text-left text-2xl font-light underline-offset-2 border-b-2 overflow-hidden ">Events</h2>
+
+            <div class="w-96 mt-4 hover:shadow-xl  rounded-xl overflow-hidden">
+                <form action="event-details/id" class="" method="POST" >
+                    <div class="h-auto w-full cursor-pointer">
+                        <div class="h-52 w-full">
+                            <img class="h-full w-full" href="" src="https://joytothehomejournal.com/wp-content/uploads/2017/04/monellolandscape-1280x640.jpg"
+                            alt="">
+                        </div>
+                        <div class="h-auto w-full pl-3">
+                            <p class="font-mainFont font-semibold mt-3">Mastermind Session: Financial Modeling for Startup Founders</p>
+                            <p class="font-mainFont font-light text-xs mt-1">Thu, 15th July 2021</p>
+                            <p class="font-mainFont font-light text-xl mt-1 my-8">12$</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </main>
+    
+  <!-- footer begins here -->
+   <%-include('partials/footer', {user:user})%>
+
+</body>
+
+</html>

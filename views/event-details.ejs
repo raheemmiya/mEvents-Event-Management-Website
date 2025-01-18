@@ -1,0 +1,126 @@
+<%-include('partials/head')%>
+
+
+    <body>
+        <!-- navbar -->
+        <%-include('partials/navBar',{ user: user } )%>
+
+            <!-- main content goes here -->
+            <main>
+                <div class=" h-auto flex flex-col justify-center items-center font-mainFont ">
+                    <!-- cover photo -->
+                    <div class="h-[50vh] mt-10 rounded-2xl overflow-hidden">
+                        <img class="max-h-full max-w-full"
+                            src="<%=event.eventImage%>"
+                            alt="" />
+                    </div>
+
+                    <!-- event details -->
+                    <div class="w-1/2 mt-4 flex flex-col items-start space-y-3 text-black">
+                        <div class="flex justify-center content-center">
+                            <p class="text-lg">Date: <span class=""><%=event.eventTime%></span></p>
+                        </div>
+                        <div class="flex justify-center content-center">
+                            <h1 class="text-5xl font-bold "><%=event.eventName%></h1>
+
+                            <!-- Reserve spot form -->
+                            <form class="" action="spot-added" method="post">
+                                <div class="w-auto border-red-600 border-2 font-mainFont p-4 rounded-lg text-xl ">
+                                    <h1 class="p-2 pl-4">by: <%=event.createdBy%> </h1>
+
+                                    <button class="mx-3 w-64 h-12 rounded-lg bg-red-700 text-white font-mainFont"
+                                        type="submit">Reserve a spot</button>
+                                </div>
+                        </div>
+                        </form>
+                        <div class="flex justify-center content-center">
+                            <p class="text-lg m-4"><span class="font-light"><%=event.description%></span></p>
+                        </div>
+
+                        <!-- channel info -->
+                        <form action="home" method="POST" class="p-2 flex h-auto w-full   bg-slate-200 rounded-sm">
+                            <div class="flex items-center w-full px-4">
+                                <img class="rounded-full h-16 w-16" src="/static/image/profile-picture.jpg" alt="">
+                                <div class="flex justify-center items-center p-4 space-x-3">
+                                    <div class="flex justify-center items-center p-2 space-x-2">
+                                        <h3 class="font-mainFont font-extralight">by:</h3>
+                                        <h2><%=event.createdBy%></h2>
+                                    </div>
+                                    <div class="flex justify-center items-center p-2 space-x-1">
+                                        <h2>29</h2>
+                                        <h3 class="font-mainFont font-extralight">followers</h3>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-end flex-1">
+                                    <button type="submit"
+                                        class="bg-blue-700  rounded-md px-9 py-3 text-slate-50">Follow</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- event overview -->
+                        <div class="flex flex-col justify-center content-center pt-32">
+                            <p class="text-3xl font-bold ">Location:
+                            <div class="flex  mt-5">
+                                <img class="h-5 w-auto px-2"
+                                    src="https://img.icons8.com/?size=100&id=85049&format=png&color=000000" alt="">
+                                <span class="text-sm font-medium"><%=event.location%></span></p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col justify-center content-center py-8 ">
+                            <p class="text-3xl font-bold ">Date and Time:
+                            <div class="flex  mt-5">
+                                <img class="h-5 w-auto px-2"
+                                    src="https://img.icons8.com/?size=100&id=GfZafUBWGQ3s&format=png&color=000000"
+                                    alt="">
+                                <span class="text-sm font-medium"><%=event.eventTime%></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col justify-center content-center pt-8 ">
+                            <p class="text-3xl font-bold ">About this event:
+                            <div class="flex  mt-5">
+                                <img class="h-5 w-auto px-2"
+                                    src="https://img.icons8.com/?size=100&id=6902&format=png&color=000000" alt="">
+                                <span class="text-sm font-medium">Total Audience: <%=event.maxAttendees%></span></p>
+                            </div>
+                        </div>
+
+                        <div class="pt-8">
+                            <h2 class="font-semibold">Mastermind Session: Financial Modeling for Startup Founders</h2>
+                            <p class="font-light">Welcome to our online Mastermind Session where startup founders can
+                                learn all
+                                about Financial
+                                Modeling! Join us for an interactive and informative session where you'll gain valuable
+                                insights
+                                on creating financial projections, understanding key metrics, and optimizing your
+                                startup's
+                                financial performance. This session is designed to help you make better business
+                                decisions and
+                                attract potential investors. Don't miss out on this opportunity to level up your
+                                financial
+                                skills!</p>
+                        </div>
+                    </div>
+
+                    <!-- Other events -->
+                    <div class="max-h-[40vh] w-full px-20 py-4 my-10">
+                        <h2
+                            class="text-left text-2xl font-light underline-offset-2 border-b-2 overflow-hidden">
+                            Other Events
+                        </h2>
+
+                        <div class="w-96 mt-4 hover:shadow-xl  rounded-xl overflow-hidden">
+                            <%-include('partials/short-event-details')%>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- footer begins here -->
+            <%-include('partials/footer', {user:user})%>
+    </body>
+
+    </html>

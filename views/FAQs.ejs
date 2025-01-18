@@ -1,0 +1,158 @@
+<%-include('partials/head')%>
+<%-include('partials/navBar', { user: user })%>
+
+
+<body class="bg-gray-50">
+    <!-- Hero Section -->
+    <div class="bg-indigo-600 text-white">
+        <div class="max-w-5xl mx-auto px-4 py-12 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl font-bold mb-4">Frequently Asked Questions</h1>
+            <p class="text-xl text-indigo-100 max-w-2xl mx-auto">
+                Find answers to common questions about our event platform
+            </p>
+        </div>
+    </div>
+
+    <!-- Search Section -->
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6">
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="relative">
+                <input type="text" 
+                       placeholder="Search frequently asked questions..." 
+                       class="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                >
+                <div class="absolute left-4 top-3.5 text-gray-400">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Categories -->
+    <div class="max-w-5xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        <!-- General Questions -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-8">General Questions</h2>
+            <div class="space-y-6">
+                <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <button class="w-full text-left px-6 py-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-semibold text-gray-900">What is mEvents?</h3>
+                            <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="mt-2 text-gray-600">
+                            We are a comprehensive event management platform that helps organizers create, manage, and host successful events of all sizes. Our platform provides tools for ticketing, attendee management, scheduling, and more.
+                        </div>
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <button class="w-full text-left px-6 py-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-semibold text-gray-900">How do I create an account?</h3>
+                            <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="mt-2 text-gray-600">
+                            Click the "Sign Up" button in the top right corner. You can create an account using your email address or sign up with Google or Facebook. Follow the prompts to complete your profile.
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- For Event Organizers -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-8">For Event Organizers</h2>
+            <div class="space-y-6">
+                <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <button class="w-full text-left px-6 py-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-semibold text-gray-900">How do I create an event?</h3>
+                            <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="mt-2 text-gray-600">
+                            Log in to your organizer account, click "Create Event" in your dashboard. Fill in the event details including date, time, location, and description. You can also add tickets, custom forms, and promotional materials.
+                        </div>
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <button class="w-full text-left px-6 py-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-semibold text-gray-900">What are the fees for organizers?</h3>
+                            <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="mt-2 text-gray-600">
+                            We offer flexible pricing plans starting from 2.5% + $0.99 per paid ticket. Free events are always free to create and manage. View our pricing page for detailed information about each plan.
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- For Attendees -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-8">For Attendees</h2>
+            <div class="space-y-6">
+                <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <button class="w-full text-left px-6 py-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-semibold text-gray-900">How do I purchase tickets?</h3>
+                            <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="mt-2 text-gray-600">
+                            Browse events, select the one you're interested in, choose your ticket type, and click "Buy Tickets." Follow the checkout process to complete your purchase using our secure payment system.
+                        </div>
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <button class="w-full text-left px-6 py-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-semibold text-gray-900">Can I get a refund?</h3>
+                            <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="mt-2 text-gray-600">
+                            Refund policies are set by event organizers. Check the event details page for specific refund policies. Generally, refund requests must be made at least 24 hours before the event starts.
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Still Have Questions -->
+        <div class="bg-indigo-50 rounded-xl p-8 text-center">
+            <h2 class="text-2xl font-bold text-indigo-900 mb-4">Still Have Questions?</h2>
+            <p class="text-indigo-700 mb-6">
+                Can't find the answer you're looking for? Contact our support team.
+            </p>
+            <div class="space-x-4">
+                <a href="#" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+                    Contact Support
+                </a>
+                <a href="#" class="inline-block bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-indigo-50 transition-colors">
+                    View Documentation
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <%-include('partials/footer' , {user:user})%>
+
+</body>
+</html>

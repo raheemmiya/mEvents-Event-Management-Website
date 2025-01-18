@@ -1,0 +1,181 @@
+<%-include('partials/head')%>
+
+<%-include('partials/navBar', { user: user })%>
+
+
+<body class="bg-gray-50">
+    <!-- Hero Section -->
+    <div class="bg-blue-600 text-white">
+        <div class="max-w-5xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+            <h1 class="text-4xl font-bold mb-4">Community Guidelines</h1>
+            <p class="text-xl text-blue-100">Creating safe and memorable events together</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <!-- Introduction -->
+        <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+            <p class="text-gray-600">
+                Welcome to our event platform. These guidelines ensure all participants can collaborate effectively while creating and attending outstanding events.
+            </p>
+        </div>
+
+        <!-- Core Values -->
+        <div class="grid md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-white rounded-lg shadow-sm p-6">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <span class="text-blue-600 font-bold">1</span>
+                </div>
+                <h3 class="text-lg font-semibold mb-2">Trust & Safety</h3>
+                <p class="text-gray-600">
+                    Maintain honest communication and prioritize attendee safety in all events.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm p-6">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <span class="text-blue-600 font-bold">2</span>
+                </div>
+                <h3 class="text-lg font-semibold mb-2">Inclusivity</h3>
+                <p class="text-gray-600">
+                    Create welcoming events that respect diversity and accommodate all participants.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm p-6">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <span class="text-blue-600 font-bold">3</span>
+                </div>
+                <h3 class="text-lg font-semibold mb-2">Professionalism</h3>
+                <p class="text-gray-600">
+                    Maintain high standards in event planning, execution, and communication.
+                </p>
+            </div>
+        </div>
+
+        <!-- Guidelines Sections -->
+        <div class="space-y-8">
+            <!-- For Event Organizers -->
+            <section class="bg-white rounded-lg shadow-sm p-6">
+                <h2 class="text-2xl font-bold mb-4">For Event Organizers</h2>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <span class="flex-shrink-0 w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-blue-600 text-sm">✓</span>
+                        </span>
+                        <div>
+                            <h4 class="font-semibold">Accurate Event Information</h4>
+                            <p class="text-gray-600">Provide clear, accurate details about event timing, location, capacity, and amenities.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="flex-shrink-0 w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-blue-600 text-sm">✓</span>
+                        </span>
+                        <div>
+                            <h4 class="font-semibold">Responsive Communication</h4>
+                            <p class="text-gray-600">Respond to attendee questions and concerns promptly and professionally.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="flex-shrink-0 w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-blue-600 text-sm">✓</span>
+                        </span>
+                        <div>
+                            <h4 class="font-semibold">Safety Protocols</h4>
+                            <p class="text-gray-600">Implement and communicate clear safety measures for all events.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- For Attendees -->
+            <section class="bg-white rounded-lg shadow-sm p-6">
+                <h2 class="text-2xl font-bold mb-4">For Attendees</h2>
+                <div class="space-y-4">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-blue-900">Respect & Responsibility</h3>
+                        <ul class="mt-2 space-y-2 text-blue-800">
+                            <li class="flex items-center">
+                                <span class="mr-2">•</span>
+                                Follow event rules and guidelines
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2">•</span>
+                                Respect other attendees and staff
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2">•</span>
+                                Arrive on time and follow check-in procedures
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2">•</span>
+                                Report any concerns to event staff
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-red-900">Prohibited Behavior</h3>
+                        <ul class="mt-2 space-y-2 text-red-800">
+                            <li class="flex items-center">
+                                <span class="mr-2">•</span>
+                                Harassment or discrimination
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2">•</span>
+                                Unauthorized recording or photography
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2">•</span>
+                                Disruptive behavior
+                            </li>
+                            <li class="flex items-center">
+                                <span class="mr-2">•</span>
+                                Violation of event-specific rules
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Help Section -->
+        <div class="mt-12 border-t border-gray-200 pt-8">
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="text-lg font-semibold mb-4">Need Help?</h3>
+                <p class="text-gray-600 mb-4">
+                    If you witness behavior that violates these guidelines or need assistance:
+                </p>
+                <ul class="text-gray-600 space-y-2">
+                    <li class="flex items-center">
+                        <span class="mr-2">•</span>
+                        Contact event staff immediately
+                    </li>
+                    <li class="flex items-center">
+                        <span class="mr-2">•</span>
+                        Use the report feature in our platform
+                    </li>
+                    <li class="flex items-center">
+                        <span class="mr-2">•</span>
+                        Email support@eventplatform.com
+                    </li>
+                    <li class="flex items-center">
+                        <span class="mr-2">•</span>
+                        For emergencies, contact local authorities
+                    </li>
+                </ul>
+            </div>
+            
+            <p class="text-gray-500 text-sm mt-8">
+                Last updated: January 2025. These guidelines are subject to change.
+            </p>
+        </div>
+    </div>
+
+    
+    <!-- footer begins here -->
+    <%-include('partials/footer', {user :user })%>
+</body>
+</html>

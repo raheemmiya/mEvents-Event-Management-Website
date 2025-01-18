@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik+Vinyl&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik+Vinyl&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik+Vinyl&display=swap');
+
+.nav-items {
+  @apply cursor-pointer self-center p-2 text-sm mx-2  hover:bg-gray-100 rounded-xl;
+}
+
+.things-to-do {
+  @apply  flex flex-col justify-center items-center p-5 h-40 w-40 rounded-full hover:bg-orange-300 hover:scale-105 cursor-pointer transition-all duration-300 ease-in-out;
+}
+
+.things-to-do-btn{ 
+  @apply border-gray-300  border-2 rounded-xl p-2 text-sm mx-2  hover:bg-gray-100;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
