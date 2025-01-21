@@ -1,17 +1,22 @@
-<div class="w-64 mt-4 hover:shadow-xl  rounded-xl overflow-hidden">
-    <form action="event-details/id" class="" method="POST" onclick="this.submit()">
-      <div class="h-full w-full cursor-pointer">
-          <div class="h-52 w-full">
-              <img class="h-full w-full" href=""
-                  src="https://joytothehomejournal.com/wp-content/uploads/2017/04/monellolandscape-1280x640.jpg"
-                  alt="">
-          </div>
-          <div class="h-full w-full pl-3">
-              <p class="font-mainFont font-semibold mt-3">Mastermind Session: Financial Modeling for
-                  Startup Founders</p>
-              <p class="font-mainFont font-light text-xs mt-1">Thu, 15th July 2021</p>
-              <p class="font-mainFont font-light text-xl mt-1 my-8">Free</p>
-          </div>
-      </div>
-  </form>
-  </div>
+<div class="w-96 mt-4 hover:shadow-xl  rounded-xl overflow-hidden">
+    <form action="event-details/<%=event._id%>" class="" method="POST" onclick="this.submit()">
+        <div class="h-full w-full cursor-pointer">
+            <div class="h-52 w-full">
+                <img class="h-full w-full" href="" src="<%=event.eventImage%>" alt="">
+            </div>
+            <div class="h-full w-full pl-3">
+                <p class="font-mainFont font-semibold mt-3">
+                    <%=event.eventName%>
+                </p>
+                <p class="font-mainFont font-light text-xs mt-1">
+                    <%=event.eventDate%>
+                </p>
+                <p class="font-mainFont font-light text-xs mt-1">
+                    <%=event.country%>
+                </p>
+                <p class="font-mainFont font-light text-xl mt-1 my-8">By: <%=event.createdBy%>
+                </p>
+            </div>
+        </div>
+    </form>
+</div>

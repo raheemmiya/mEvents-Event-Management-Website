@@ -1,0 +1,46 @@
+<%-include('partials/head')%>
+    <%-include('partials/navBar', { user: user })%>
+
+
+        <body class="bg-gray-50 m-0 p-0 min-h-screen flex h-full flex-col">
+            
+            <!-- Header -->
+            <div class="bg-white shadow-sm">
+                <div class="max-w-6xl mx-auto px-4 py-8">
+                    <h1 class="text-3xl font-bold">My Favorite Events</h1>
+                    <p class="text-gray-600 mt-2">Keep track of events you're interested in</p>
+                </div>
+            </div>
+
+            <!-- Favorites Content -->
+            <div class="flex-grow  max-w-6xl mx-auto px-4 py-12">
+               
+             <% if(typeof favouriteEventList !== 'undefined' || typeof favouriteEventList !== null ){%>
+
+                <!-- Favourite Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <% favouriteEventList.forEach(event=>{ %>
+                        <%-include('partials/favourite-events', { event:event , user:user }) %>
+                            <% }) %>
+
+                </div>
+                <%} else {%>
+                <!-- Empty State (Hidden by default) -->
+                <div class=" text-center py-16">
+                    <i class="far fa-heart text-6xl text-gray-300 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-600 mb-2">No Favorite Events Yet</h3>
+                    <p class="text-gray-500 mb-6">Start exploring events and save your favorites!</p>
+                    <a href="/home" class="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600">
+                        Explore Events
+                    </a>
+                </div>
+
+                <%}%>
+            </div>
+
+            <!-- footer begins here -->
+            <%-include('partials/footer' , {user:user})%>
+        </body>
+
+        </html>

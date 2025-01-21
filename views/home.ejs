@@ -52,14 +52,13 @@
 
         <!-- Browsing events label -->
          <form id="countryForm" action="/home" method="post">
-
            <div class="flex border-t-2 border-b-2 w-100% pt-5 pb-5 mt-5 mb-5 font-mainFont text-xl justify-center content-center">
              <label for="country"> Browsing events in: </label>
              <div>
                <select name="country" id="countries">
-                 <option value="Nepal" selected>Nepal</option>
+                 <option value="Nepal" >Nepal</option>
                 <% availableCountryNames.forEach(country=>{ %>
-                 <option value="<%=country%>"><%=country%></option>
+                 <option value="<%=country%>" <%= country === selectedCountry ? 'selected' : '' %> ><%=country%></option>
                     <% }) %>
                 </select>
               </div>
@@ -76,14 +75,21 @@
 
         <!-- Specific Events -->
         <div class="pb-4 w-full h-full">
-          <h2 class="font-mainFont font-bold text-2xl pl-96">Events in Nepal</h2>
+          <h2 class="font-mainFont font-bold text-2xl pl-96" id="selectedCountryName">Events in <%= selectedCountry %></h2>
 
           <!-- container of the events -->
           <div class="flex  w-full h-full flex-wrap justify-start content-start gap-4 px-64">
 
+            <% if(typeof eventListByCountry !== 'undefined' && typeof eventListByCountry !== null ){%>
+              <% for(let i=0; i < eventListByCountry.length; i++) { %>
+                <%-include('partials/specific-events', {event: eventListByCountry[i]}) %>
+                  <% } %>
+
+            <% }else{%>
+
             <% for(let i=0; i < totalEvents.length; i++) { %>
-              <!-- events section -->
               <%-include('partials/specific-events', {event: totalEvents[i]}) %>
+                <% } %>
                 <% } %>
 
           </div>
@@ -94,21 +100,12 @@
         <div class="border-t-2 pt-4 mt-4 pb-4">
           <h2 class="font-mainFont font-bold text-2xl px-96 pb-4  ">Other Events</h2>
 
-          <!-- events -->
-          <!-- <div class="flex content-start justify-start gap-4 px-72"> -->
-            <!-- <%-include('partials/other-events') %>
-              <%-include('partials/other-events') %>
-                <%-include('partials/other-events') %>
-                  <%-include('partials/other-events') %>
-                    <%-include('partials/other-events') %> -->
-          <!-- </div> -->
-
           <!-- container of the events -->
           <div class="flex  w-full h-full flex-wrap justify-start content-start gap-4 px-64">
 
             <% for(let i=0; i < totalEvents.length; i++) { %>
               <!-- events section -->
-              <%-include('partials/specific-events', {event: totalEvents[i]}) %>
+              <%-include('partials/other-events', {event: totalEvents[i]}) %>
                 <% } %>
 
           </div>

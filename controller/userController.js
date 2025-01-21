@@ -1,26 +1,37 @@
 const User = require("../model/user");
 const Event = require("../model/events");
 
-
 exports.homePage = async (req, res) => {
   try {
     const totalEvents = await Event.fetchAll();
     const user = await User.allUser();
     const availableCountryNames = await Event.getAllEventCountryList();
+    let eventListByCountry;
+    let selectedCountry;
+
+    if (req.body.country) {
+      eventListByCountry = await Event.getAllEventByCountry(req.body.country);
+      selectedCountry = req.body.country;
+    }else{ 
+      selectedCountry = "Nepal";
+      eventListByCountry = await Event.getAllEventByCountry("Nepal");
+    }
 
     res.render("home", {
       pageTitle: "Home",
       user: user || null,
       totalEvents: totalEvents,
-      availableCountryNames:availableCountryNames,
+      availableCountryNames: availableCountryNames,
+      selectedCountry: req.body.country,
+      eventListByCountry:eventListByCountry,
+      selectedCountry: selectedCountry
     });
 
   } catch (error) {
     console.error("Error in homePage:", error);
-    res.status(500).render("error", { message: "Something went wrong" });
+    // res.status(500).render("error", { message: "Something went wrong" });
   }
 };
-
 
 exports.registerPage = (req, res) => {
   res.render("register", { pageTitle: "Create Account", errorMessage: null });
@@ -70,18 +81,27 @@ exports.registerUser = (req, res) => {
 
 exports.communityGuidelines = (req, res) => {
   User.allUser().then((user) => {
-    res.render("community-guidelines", { pageTitle: "Community Guidelines: mEvents",user: user });
+    res.render("community-guidelines", {
+      pageTitle: "Community Guidelines: mEvents",
+      user: user,
+    });
   });
 };
 
-exports.getOurSponsersPage = (req, res) => { 
+exports.getOurSponsersPage = (req, res) => {
   User.allUser().then((user) => {
-  res.render('our-sponsers', {pageTitle: "Our Sponsers - mEvents", user:user})
-  });
-}
-
-exports.getFAQPage = (req, res)=>{ 
-  User.allUser().then((user) => {
-    res.render('FAQs', {pageTitle: "FAQs - mEvents", user:user})
+    res.render("our-sponsers", {
+      pageTitle: "Our Sponsers - mEvents",
+      user: user,
     });
-}
+  });
+};
+
+exports.getFAQPage = (req, res) => {
+  User.allUser().then((user) => {
+    res.render("FAQs", { pageTitle: "FAQs - mEvents", user: user });
+  });
+};
+
+
+

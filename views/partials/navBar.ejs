@@ -29,11 +29,12 @@
     <!-- The menu div -->
     <div class="flex mx-6 mr-16 px-8 ">
       <ul class="flex ">
-        <a href="#" class="nav-items">Find Events</a>
-    <% if(typeof user !== 'undefined' && user !== null){ %>
-      <a href="/createEvent/<%=user._id%>" class="nav-items">Create Events </a>
+        <% if(typeof user !== 'undefined' && user !== null){ %>
+        <a href="/favouritesPage/<%=user._id%>" class="nav-items">Favourites</a>
+        <a href="/createEvent/<%=user._id%>" class="nav-items">Create Events </a>
       <%} else { %>
-        <a href="/login" class="nav-items">Create Events </a>
+        <a href="/login" class="nav-items">Favourites</a>
+        <a href="/login" class="nav-items">Create Events </a> 
       <%} %>
 
         

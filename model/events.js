@@ -83,6 +83,25 @@ class Event {
       console.error("Error while fetching the country name", error);
     }
   }
+
+  static async getAllEventByCountry(countryName){ 
+    try {
+      const _db = getEventDb();
+      const allEvents = await _db.collection('events').find({}).toArray();
+      const eventList= [];
+      allEvents.forEach(event => {
+        if (event.country == countryName) {
+          eventList.push(event)
+        }
+      });
+      return eventList;
+
+    } catch (error) {
+      console.error("Error while fetching the event database using country name", error);
+    }
+  }
+
+  
 }
 
 module.exports = Event;

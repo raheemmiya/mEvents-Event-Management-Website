@@ -1,6 +1,7 @@
 const User = require("../model/user");
 const Event = require("../model/events");
 const Country = require("../model/country");
+const Favourite = require("../model/favourite");
 
 exports.loginPage = (req, res) => {
   res.render("login", { pageTitle: "Login", errorMessage: null });
@@ -55,4 +56,61 @@ exports.toLogOut = (req, res) => {
     // })
     res.redirect("/home");
   });
+};
+
+exports.addToFavourite = async (req, res) => {
+  const userId = req.params.userId;
+  const eventId = req.params.eventId;
+
+  const newFav = new Favourite(userId, eventId);
+  await newFav.addFavourite();
+
+  const result = await User.addToFav(userId, eventId);
+
+  console.log("Event is added or not? ", result);
+
+  res.redirect("/home");
+};
+
+exports.getFavouritesPage = async (req, res) => {
+  try {
+    const user = await User.allUser();
+
+    const favouriteEventList = await User.getFavouritesById(req.params.userId);
+
+    res.render("favourites", {
+      pageTitle: "My Favourites-mEvents",
+      user: user,
+      favouriteEventList: favouriteEventList,
+    });
+  } catch (error) {
+    console.log("Error while getting the fav page", error);
+  }
+};
+
+exports.deleteFavourite = async (req, res, next) => {
+  try {
+    const result = await User.deleteFavourite(
+      req.params.userId,
+      req.params.eventId
+    );
+    if (result.modifiedCount > 0) {
+      console.log("Event successfully removed");
+      const user = await User.allUser();
+
+      const favouriteEventList = await User.getFavouritesById(
+        req.params.userId
+      );
+
+      res.render("favourites", {
+        pageTitle: "My Favourites-mEvents",
+        user: user,
+        favouriteEventList: favouriteEventList,
+      });
+    } else {
+      console.log("Event not found or already removed");
+    }
+  } catch (error) {
+    console.log("Error while deleting the favourites", error);
+  }
 };

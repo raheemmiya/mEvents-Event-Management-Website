@@ -1,5 +1,6 @@
 const { ObjectId } = require("mongodb");
 const { getDb } = require("../utility/user-database");
+const Event = require("../model/events");
 
 class User {
   constructor(name, email, password, description) {
@@ -10,6 +11,9 @@ class User {
     this.isLoggedIn = false;
     this.createdAt = new Date();
     this.updatedAt = new Date();
+    this.createdEvents = [];
+    this.favouriteEvents = [];
+    this.bookedEvents = [];
   }
 
   async registerUser() {
@@ -131,20 +135,98 @@ class User {
 
   static async addCreatedEvents(event) {
     const _db = getDb();
-    console.log("Here the event object contains",event);
-    
+    console.log("Here the event object contains", event);
+
     const userName = event.createdBy;
     const filter = { name: userName };
     const updateQuery = {
       $push: {
         createdEvents: event,
       },
-      $set:{ 
+      $set: {
         updatedAt: new Date(),
-      }
+      },
     };
 
     return await _db.collection("users").updateOne(filter, updateQuery);
+  }
+
+  static async addToFav(userId, eventId) {
+    const _db = getDb();
+
+    try {
+      // to check if the event is already listed to the favourites or not
+      const isAlreadyFavourite = await User.checkFav(userId, eventId);
+      if (isAlreadyFavourite === true) {
+        console.log("Duplicate Event trying to be added to the favList");
+        return;
+      }
+
+      const event = await Event.getEventById(eventId);
+      const filter = { _id: new ObjectId(userId) };
+
+      const query = {
+        $push: {
+          favouriteEvents: event,
+        },
+      };
+
+      return await _db.collection("users").updateOne(filter, query);
+    } catch (error) {
+      console.log("Error while adding favourite events to the user", error);
+    }
+  }
+
+  static async checkFav(userId, eventId) {
+    try {
+      const user = await User.getUserById(userId);
+      let result = false;
+
+      const currFavList = user.favouriteEvents;
+
+      currFavList.forEach((event) => {
+        if (event._id.equals(new ObjectId(eventId))) {
+          result = true;
+        }
+      });
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async getFavouritesById(userId) {
+    const _db = getDb();
+    try {
+      const user = await User.getUserById(userId);
+      const favouriteEvents = user.favouriteEvents;
+      return favouriteEvents;
+    } catch (error) {
+      console.log("Error while getting favourite events from the user", error);
+    }
+  }
+
+  static async deleteFavourite(userId, eventId) {
+    try {
+      const _db = await getDb();
+      const currUserId = new ObjectId(userId);
+      const currEventId = new ObjectId(eventId);
+      
+      return await _db.collection("users").updateOne(
+        { _id: currUserId },
+        {
+          $pull: {
+            favouriteEvents: {
+              _id: currEventId,
+            },
+          },
+        }
+      );
+
+
+    } catch (error) {
+      console.log("Error while deleting favourite events from the user", error);
+    }
   }
 }
 
