@@ -51,6 +51,7 @@ class Event {
   static async getEventById(id) {
     try {
       const _db = getEventDb();
+      console.log(id);
       return await _db.collection("events").findOne({ _id: new ObjectId(id) });
     } catch (err) {
       console.log("Error while getting the event using ID", err);
@@ -100,6 +101,8 @@ class Event {
       console.error("Error while fetching the event database using country name", error);
     }
   }
+
+  
 
   
 }

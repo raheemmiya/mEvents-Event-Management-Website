@@ -3,6 +3,9 @@ const { getDb } = require("../utility/user-database");
 const Event = require("../model/events");
 
 class User {
+  // Constants
+  static COLLECTION_NAME = 'users';
+
   constructor(name, email, password, description) {
     this.name = name;
     this.email = email;
@@ -14,21 +17,26 @@ class User {
     this.createdEvents = [];
     this.favouriteEvents = [];
     this.bookedEvents = [];
+    this.tickets = [];
   }
 
+  // Database connection helper
+  static async getCollection() {
+    const db = getDb();
+    return db.collection(this.COLLECTION_NAME);
+  }
+
+  // Authentication Methods
   async registerUser() {
     try {
-      const _db = getDb();
-
-      // Check if email already exists
-      const existingUser = await _db
-        .collection("users")
-        .findOne({ email: this.email });
+      const collection = await User.getCollection();
+      const existingUser = await collection.findOne({ email: this.email });
+      
       if (existingUser) {
-        return;
+        return null;
       }
-      const result = await _db.collection("users").insertOne(this);
-      console.log(`User registered successfully with id: ${result.insertedId}`);
+
+      const result = await collection.insertOne(this);
       return result;
     } catch (error) {
       console.error("Error in registerUser:", error);
@@ -36,54 +44,41 @@ class User {
     }
   }
 
-  static async findUser(body) {
+  static async fetchAll() {
+    const collection = await this.getCollection();
+    return await collection.find({}).toArray();
+  } 
+
+  static async findUser({ email, password }) {
     try {
-      if (!body?.email || !body?.password) {
+      if (!email || !password) {
         throw new Error("Email and password are required");
       }
 
-      const _db = getDb();
-      const user = await _db.collection("users").findOne({
-        email: body.email,
-        password: body.password,
-      });
-
-      if (!user) {
-        return user;
-      }
-      return user;
+      const collection = await this.getCollection();
+      return await collection.findOne({ email, password });
     } catch (error) {
       console.error("Error in findUser:", error);
       throw error;
     }
   }
 
-  static async getId(body) {
-    try {
-      const user = await this.findUser(body);
-      return user._id.toString();
-    } catch (error) {
-      console.error("Error in getId:", error);
-      throw error;
-    }
-  }
-
+  // User Status Management
   static async userLog(body) {
     try {
-      const _db = getDb();
       const user = await this.findUser(body);
+      if (!user) throw new Error("User not found");
 
-      const filter = { _id: new ObjectId(user._id) };
-      const updateQuery = {
-        $set: {
-          isLoggedIn: !user.isLoggedIn,
-          updatedAt: new Date(),
-        },
-      };
-
-      const result = await _db
-        .collection("users")
-        .updateOne(filter, updateQuery);
+      const collection = await this.getCollection();
+      const result = await collection.updateOne(
+        { _id: new ObjectId(user._id) },
+        {
+          $set: {
+            isLoggedIn: !user.isLoggedIn,
+            updatedAt: new Date(),
+          },
+        }
+      );
 
       if (result.modifiedCount === 0) {
         throw new Error("Failed to update user login status");
@@ -96,138 +91,130 @@ class User {
     }
   }
 
-  static async userStatus(body) {
+  // User Retrieval Methods
+  static async getUserById(id) {
     try {
-      const user = await this.findUser(body);
-      return user.isLoggedIn;
+      if (!id) throw new Error("User ID is required");
+      
+      const collection = await this.getCollection();
+      return await collection.findOne({ _id: new ObjectId(id) });
     } catch (error) {
-      console.error("Error in userStatus:", error);
+      console.error("Error while fetching user by id:", error);
       throw error;
     }
   }
 
-  static async allUser() {
+  static async getLoggedInUser() {
     try {
-      const _db = getDb();
-      const data = await _db.collection("users").find({}).toArray();
-      let loggedInUser;
-      data.forEach((user) => {
-        if (user.isLoggedIn) {
-          loggedInUser = user;
-        }
-      });
-      return loggedInUser;
+      const collection = await this.getCollection();
+      return await collection.findOne({ isLoggedIn: true });
     } catch (error) {
-      console.error(error);
+      console.error("Error in getLoggedInUser:", error);
+      throw error;
     }
   }
 
-  static async getUserById(id) {
-    const _db = getDb();
-    let user;
-    try {
-      user = _db.collection("users").findOne({ _id: new ObjectId(id) });
-      return user;
-    } catch (err) {
-      console.error("Error while fetching user by id", err);
-    }
-  }
-
+  // Event Management Methods
   static async addCreatedEvents(event) {
-    const _db = getDb();
-    console.log("Here the event object contains", event);
-
-    const userName = event.createdBy;
-    const filter = { name: userName };
-    const updateQuery = {
-      $push: {
-        createdEvents: event,
-      },
-      $set: {
-        updatedAt: new Date(),
-      },
-    };
-
-    return await _db.collection("users").updateOne(filter, updateQuery);
-  }
-
-  static async addToFav(userId, eventId) {
-    const _db = getDb();
-
     try {
-      // to check if the event is already listed to the favourites or not
-      const isAlreadyFavourite = await User.checkFav(userId, eventId);
-      if (isAlreadyFavourite === true) {
-        console.log("Duplicate Event trying to be added to the favList");
-        return;
+      if (!event?.createdBy) throw new Error("Event creator is required");
+
+      const collection = await this.getCollection();
+      return await collection.updateOne(
+        { name: event.createdBy },
+        {
+          $push: { createdEvents: event },
+          $set: { updatedAt: new Date() }
+        }
+      );
+    } catch (error) {
+      console.error("Error in addCreatedEvents:", error);
+      throw error;
+    }
+  }
+  // Favorite Events Management
+  static async checkFav(userId, eventId) {
+    const favourites = await this.getFavouritesById(userId);
+    return favourites.some(fav => fav._id.toString() === eventId.toString());
+  }
+  static async addToFav(userId, eventId) {
+    try {
+      if (!userId || !eventId) {
+        throw new Error("User ID and Event ID are required");
+      }
+
+      const isAlreadyFavourite = await this.checkFav(userId, eventId);
+      if (isAlreadyFavourite) {
+        return null;
       }
 
       const event = await Event.getEventById(eventId);
-      const filter = { _id: new ObjectId(userId) };
+      if (!event) {
+        throw new Error("Event not found");
+      }
 
-      const query = {
-        $push: {
-          favouriteEvents: event,
-        },
-      };
-
-      return await _db.collection("users").updateOne(filter, query);
+      const collection = await this.getCollection();
+      return await collection.updateOne(
+        { _id: new ObjectId(userId) },
+        { $push: { favouriteEvents: event } }
+      );
     } catch (error) {
-      console.log("Error while adding favourite events to the user", error);
-    }
-  }
-
-  static async checkFav(userId, eventId) {
-    try {
-      const user = await User.getUserById(userId);
-      let result = false;
-
-      const currFavList = user.favouriteEvents;
-
-      currFavList.forEach((event) => {
-        if (event._id.equals(new ObjectId(eventId))) {
-          result = true;
-        }
-      });
-      return result;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  static async getFavouritesById(userId) {
-    const _db = getDb();
-    try {
-      const user = await User.getUserById(userId);
-      const favouriteEvents = user.favouriteEvents;
-      return favouriteEvents;
-    } catch (error) {
-      console.log("Error while getting favourite events from the user", error);
+      console.error("Error in addToFav:", error);
+      throw error;
     }
   }
 
   static async deleteFavourite(userId, eventId) {
     try {
-      const _db = await getDb();
-      const currUserId = new ObjectId(userId);
-      const currEventId = new ObjectId(eventId);
-      
-      return await _db.collection("users").updateOne(
-        { _id: currUserId },
+      const collection = await this.getCollection();
+      return await collection.updateOne(
+        { _id: new ObjectId(userId) },
         {
           $pull: {
             favouriteEvents: {
-              _id: currEventId,
-            },
-          },
+              _id: new ObjectId(eventId)
+            }
+          }
         }
       );
-
-
     } catch (error) {
-      console.log("Error while deleting favourite events from the user", error);
+      console.error("Error in deleteFavourite:", error);
+      throw error;
     }
   }
+
+  // Getter Methods
+  static async getFavouritesById(userId) {
+    try {
+      const user = await this.getUserById(userId);
+      return user?.favouriteEvents || [];
+    } catch (error) {
+      console.error("Error in getFavouritesById:", error);
+      throw error;
+    }
+  }
+
+  static async getAllCreatedEventsList(userId) {
+    try {
+      const user = await this.getUserById(userId);
+      return user?.createdEvents || [];
+    } catch (error) {
+      console.error("Error in getAllCreatedEventsList:", error);
+      throw error;
+    }
+  }
+  
+  static async addTicket(userId, ticket) {
+    try {
+      const collection = await this.getCollection();
+      return await collection.updateOne({ _id: new ObjectId(userId) }, { $push: { tickets: ticket } });
+    } catch (error) {
+      console.error("Error in addTicket:", error);
+      throw error;
+    }
+  }
+  
+
 }
 
 module.exports = User;

@@ -32,14 +32,14 @@
         <% if(typeof user !== 'undefined' && user !== null){ %>
         <a href="/favouritesPage/<%=user._id%>" class="nav-items">Favourites</a>
         <a href="/createEvent/<%=user._id%>" class="nav-items">Create Events </a>
+        <a href="/find-my-tickets/<%=user._id%>" class="nav-items">Find my tickets</a>
       <%} else { %>
         <a href="/login" class="nav-items">Favourites</a>
         <a href="/login" class="nav-items">Create Events </a> 
-      <%} %>
+        <a href="/login" class="nav-items">Find my tickets</a> 
 
-        
+      <%} %>
         <a href="#" class="nav-items">Help Center</a>
-        <a href="#" class="nav-items">Find my tickets</a>
       </ul>
     </div>
 
@@ -66,6 +66,7 @@
             <div class=" hidden group-hover:block mt-2 w-48 bg-white rounded-lg shadow-lg right-0">
               <a href="/loggedOut/<%=user._id%>" class="block px-4 py-2 hover:bg-gray-100">log out</a>
               <a href="/login" class="block px-4 py-2 hover:bg-gray-100">Switch Account</a>
+              <a href="/my-profile/<%=user._id%>" class="block px-4 py-2 hover:bg-gray-100">My Profile</a>
             </div>
           </div>
 

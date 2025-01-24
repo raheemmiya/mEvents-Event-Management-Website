@@ -1,7 +1,8 @@
 const Event = require('../model/events')
 const User = require('../model/user')
+const EventCategory = require('../model/event-categories')
 
-exports.createEvent = (req, res)=>{ 
+exports.createEvent =async (req, res)=>{ 
     const createdBy = req.params.name;
     const eventName = req.body.eventName;
     const eventDate = req.body.eventDate;
@@ -27,15 +28,17 @@ exports.createEvent = (req, res)=>{
         eventImage,
         createdBy,
     )
-    
-    newEvent.createEvent().then(result=>{ 
-        console.log("EVent created successfully");
-        User.addCreatedEvents(newEvent).then(result=> {
-            console.log("Event added to the user database successfully");
-        })
+    try {
+        await newEvent.createEvent();
+        console.log("Event created successfully");
+        await User.addCreatedEvents(newEvent);
+        console.log("Event added to the user database successfully");
+        await EventCategory.addEventToCategory(newEvent);
+        console.log("Event added to the category database successfully");
+    } catch (error) {
+        console.error("Error creating event:", error);
+    }
         
-        
-    })
     res.send("<h2>Your Event has been added</h2>")
     
   }

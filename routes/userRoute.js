@@ -1,7 +1,7 @@
 const express = require("express");
 const Event = require('../model/events')
 
-const { homePage, getOurSponsersPage, getFAQPage, getFavouritesPage } = require("../controller/userController");
+const { homePage, getOurSponsersPage, getFAQPage, getFavouritesPage, getEventsByCategoryPage } = require("../controller/userController");
 const { registerPage } = require("../controller/userController");
 const { eventDetails } = require("../controller/userController");
 const { registerUser } = require("../controller/userController");
@@ -18,6 +18,6 @@ userRouter.get('/community-guidelines', communityGuidelines)
 userRouter.get('/our-sponsers', getOurSponsersPage)
 userRouter.get('/FAQs',getFAQPage)
 userRouter.post('/home', homePage)
-userRouter.get('/events-by-categories', (req, res)=> res.render('eventsByCategory', {pageTitle: "Fuck"}))
+userRouter.get('/eventsByCategory/:category/:country', getEventsByCategoryPage)
 
 module.exports = userRouter;

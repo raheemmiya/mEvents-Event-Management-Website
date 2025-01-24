@@ -1,5 +1,5 @@
 const express = require("express");
-const {loginPage, addToFavourite, getFavouritesPage, deleteFavourite} = require("../controller/hostController");
+const {loginPage, spotAdded, addToFavourite, getFavouritesPage, deleteFavourite, getMyProfile, getMyTicketPages} = require("../controller/hostController");
 const {loginUser} = require("../controller/hostController");
 const {createEventPage} = require('../controller/hostController')
 const {toLogOut} = require('../controller/hostController')
@@ -17,6 +17,9 @@ hostRouter.post('/addToFavourite/:eventId/:userId', addToFavourite)
 hostRouter.post('/addToFavourite/:eventId/', loginPage)
 hostRouter.get('/favouritesPage/:userId/', getFavouritesPage); 
 hostRouter.post('/favourites/delete/:userId/:eventId' , deleteFavourite)
+hostRouter.get('/my-profile/:userId', getMyProfile)
+hostRouter.get('/find-my-tickets/:userId', getMyTicketPages);
+hostRouter.post('/spot-added/:userId', spotAdded)
 
 
 module.exports = hostRouter;

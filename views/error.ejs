@@ -1,0 +1,52 @@
+<%- include('partials/head') %>
+
+<body class="bg-gray-50">
+    <%- include('partials/navBar', {user: user}) %>
+
+    <main class="min-h-screen flex items-center justify-center px-6 py-24 sm:py-32 lg:px-8">
+        <div class="text-center">
+            <!-- Error Code -->
+            <p class="text-8xl font-semibold text-blue-700">
+                <%= error.status || 500 %>
+            </p>
+
+            <!-- Error Message -->
+            <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                <%= error.message || "Something went wrong" %>
+            </h1>
+
+            <!-- Error Description -->
+            <p class="mt-6 text-base leading-7 text-gray-600">
+                <% if (error.status === 404) { %>
+                    Sorry, we couldn't find the page you're looking for.
+                <% } else { %>
+                    Sorry, something went wrong on our end. We're working to fix it.
+                <% } %>
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="mt-10 flex items-center justify-center gap-x-6">
+                <a 
+                    href="/" 
+                    class="rounded-md bg-blue-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-colors"
+                >
+                    Go back home
+                </a>
+                <a 
+                    href="javascript:history.back()" 
+                    class="text-sm font-semibold text-gray-900 hover:text-blue-700 transition-colors"
+                >
+                    Go back <span aria-hidden="true">&rarr;</span>
+                </a>
+            </div>
+
+            <!-- Contact Support -->
+            <div class="mt-8 text-sm text-gray-500">
+                Need help? <a href="/contact" class="font-medium text-blue-700 hover:text-blue-800 transition-colors">Contact support</a>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer', {user: user}) %>
+</body>
+</html>

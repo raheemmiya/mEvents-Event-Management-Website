@@ -33,12 +33,24 @@
                               
                                 <div class="flex">
                                   <!-- Outer Form -->
-                                  <form class="" action="spot-added" method="post">
-                                    <button class="mx-3 w-64 h-12 rounded-lg bg-red-700 text-white font-mainFont" type="submit">
+
+                                  <% if (user) { %>
+                                    <% const hasTicket = user.tickets && user.tickets.some(ticket => ticket.eventId.toString() === event._id.toString()) %>
+                                    <form class="" action="/spot-added/<%= user._id %>" method="post">
+                                      <input type="hidden" name="eventId" value="<%= event._id %>">
+                                      <input type="hidden" name="event" value="<%= event %>">
+                                      <button class="mx-3 w-64 h-12 rounded-lg <%= hasTicket ? 'bg-gray-500' : 'bg-red-700' %> text-white font-mainFont" 
+                                              type="submit"
+                                              <%= hasTicket ? 'disabled' : '' %>>
+                                        <%= hasTicket ? 'Reserved' : 'Reserve a spot' %>
+                                      </button>
+                                    </form>
+                                  <% } else { %>
+                                    <a href="/login" class="mx-3 w-64 h-12 rounded-lg bg-red-700 text-white font-mainFont flex items-center justify-center">
                                       Reserve a spot
-                                    </button>
-                                  </form>
-                              
+                                    </a>
+                                  <% } %>
+
                                   <!-- Inner Form -->
                                   <form action="/addToFavourite/<%= event._id %>/<%= user ? user._id : '' %>" method="post">
                                     <button type="submit" style="border: none; background: none; padding: 0;">
