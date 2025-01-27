@@ -7,22 +7,25 @@
             <!-- Header -->
             <div class="bg-white shadow-sm">
                 <div class="max-w-6xl mx-auto px-4 py-8">
-                    <h1 class="text-3xl font-bold">My Favorite Events</h1>
-                    <p class="text-gray-600 mt-2">Keep track of events you're interested in</p>
+                    <h1 class="text-3xl font-bold">My Created Events</h1>
+                    <p class="text-gray-600 mt-2">Keep track of events you are hosting in</p>
                 </div>
             </div>
 
             <!-- Favorites Content -->
             <div class="flex-grow  max-w-6xl mx-auto px-4 py-12">
                
-                <% if(favouriteEventList && favouriteEventList.length > 0) { %>
-                    <!-- Favourite Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <% favouriteEventList.forEach(event=>{ %>
-                            <%-include('partials/events-card', { event:event , user:user , context:"favourites" })%>
-                        <% }) %>
-                    </div>
-                <% } else { %>
+             <% if(typeof events !== 'undefined' || typeof events !== null ){%>
+
+                <!-- Favourite Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">  
+
+                    <% events.forEach(event=>{ %>
+                        <%-include('partials/events-card', { event:event , user:user , context: 'myEvents'}) %>
+                            <% }) %>
+
+                </div>
+                <%} else {%>
                 <!-- Empty State (Hidden by default) -->
                 <div class=" text-center py-16">
                     <i class="far fa-heart text-6xl text-gray-300 mb-4"></i>
@@ -33,7 +36,7 @@
                     </a>
                 </div>
 
-                <% } %>
+                <%}%>
             </div>
 
             <!-- footer begins here -->

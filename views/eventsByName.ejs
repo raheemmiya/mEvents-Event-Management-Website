@@ -1,0 +1,64 @@
+<%-include('partials/head')%>
+
+    <body>
+        <%-include('partials/navBar',{ user: user } )%>
+
+        <div class="bg-gradient-to-r from-purple-600 to-purple-800 h-96 w-full flex justify-between items-center px-12">
+            <div class="ml-44 text-left max-w-xl">
+                <h1 class="text-7xl font-mainFont font-extrabold mb-6 tracking-wider leading-tight">
+                    <span class="text-white">SEARCH</span> <span class="text-yellow-400">RESULTS</span>
+                </h1>
+                <h4 class="text-orange-400 text-2xl font-semibold mb-4 tracking-wide">
+                    Events Matching Your Search
+                </h4>
+            </div>
+            <div class="hidden md:block">
+                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30" alt="Events"
+                    class="h-80 w-auto rounded-lg shadow-2xl transform hover:scale-105 transition-all duration-500 hover:shadow-orange-400/50">
+            </div>
+        </div>
+
+        <main class="flex-grow">
+            <%if (events.length > 0) {%>
+                <div class="container mx-auto px-4 py-8">
+                    <h2 class="text-3xl font-bold mb-6">Found Events</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="events-container">
+                        <% events.forEach(event => { %>
+                            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                                <img src="<%= event.eventImage %>" alt="<%= event.eventName %>"
+                                    class="w-full h-48 object-cover">
+                                <div class="p-4">
+                                    <h3 class="text-xl font-semibold mb-2">
+                                        <%= event.eventName %>
+                                    </h3>
+                                    <p class="text-gray-600 mb-2">
+                                        <%= event.eventDate %>
+                                    </p>
+                                    <p class="text-gray-500 truncate">
+                                        <%= event.description %>
+                                    </p>
+                                    <form action="/event-details/<%= event._id %>" method="post" class="mt-4">
+                                        <button type="submit"
+                                            class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+                                            View Details
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            <% } else { %>
+                <div class="flex flex-col items-center justify-center py-12">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">No events found</h1>
+                    <p class="text-gray-600 text-lg mb-6">We couldn't find any events matching your search criteria.</p>
+                    <a href="/home" class="bg-purple-500 hover:bg-purple-600 text-white font-semibold px-6 py-3 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+                        Browse All Events
+                    </a>
+                </div>
+            <% } %>
+        </main>
+        
+    </body>
+
+    </html>

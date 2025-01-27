@@ -42,3 +42,10 @@ exports.createEvent =async (req, res)=>{
     res.send("<h2>Your Event has been added</h2>")
     
   }
+
+  exports.deleteMyEvent = async (req, res) => {
+    const userId = req.params.userId;
+    const eventId = req.params.eventId;
+    await Event.deleteEvent(eventId);
+    res.redirect(`/my-events/${userId}`);
+  }

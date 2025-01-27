@@ -1,86 +1,128 @@
 <!-- navbar goes here -->
 <header class="bg-white m-0 p-0 border-b-[1px]">
 
-  <!-- the main contanier -->
-  <div class="flex h-14 mx-3  content-center">
+  <!-- the main container -->
+  <div class="flex flex-col md:flex-row h-auto md:h-14 mx-3 content-center">
 
+    <!-- Top mobile row with logo, profile and menu button -->
+    <div class="flex justify-between items-center md:hidden w-full py-2">
+      <!-- The logo div -->
+      <div class="flex content-center">
+        <img class="h-8 w-8" src="https://img.icons8.com/?size=100&id=113580&format=png&color=000000" alt="main-logo">
+        <a href="/home" class="content-center font-extrabold text-orange-600 font-logoFont text-xl">mEvents</a>
+      </div>
 
-    <!-- The logo div -->
-    <div class="flex justify-center content-center px-1 pr-3">
-      <img src="https://img.icons8.com/?size=100&id=113580&format=png&color=000000" alt="main-logo">
+      <div class="flex items-center gap-2">
+        <% if(typeof user !=='undefined' && user !==null){ %>
+          <div class="self-center rounded-2xl flex items-center bg-slate-200 gap-3">
+            <div class="h-9 w-9 flex content-center justify-center rounded-full overflow-hidden">
+              <img class="object-cover w-full h-auto" src="/static/image/gtr.jpg" alt="">
+            </div>
+            <h3 class="font-profileFont">
+              <%=user.name%>
+            </h3>
+            <div class="relative group">
+              <span class="ml-2 cursor-pointer">▼</span>
+              <div class="absolute right-0">
+                <div class="hidden group-hover:block mt-2 w-48 bg-white rounded-lg shadow-lg right-0 z-50">
+                  <a href="/loggedOut/<%=user._id%>" class="block px-4 py-2 hover:bg-gray-100">log out</a>
+                  <a href="/login" class="block px-4 py-2 hover:bg-gray-100">Switch Account</a>
+                  <a href="/my-profile/<%=user._id%>" class="block px-4 py-2 hover:bg-gray-100">My Profile</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%} else { %>
+            <div class="place-content-center rounded-2xl bg-orange-400">
+              <a class="p-2 border-r-[1px] border-black" href="/login">Login</a>
+              <a class="p-2" href="/register">Signup</a>
+            </div>
+            <%} %>
+
+              <!-- Hamburger Menu Button -->
+              <button class="p-2 md:hidden" onclick="toggleMenu()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+              </button>
+      </div>
+    </div>
+
+    <!-- Desktop logo (hidden on mobile) -->
+    <div class="hidden md:flex justify-start content-center px-1 pr-3">
+      <img class="h-auto w-auto" src="https://img.icons8.com/?size=100&id=113580&format=png&color=000000"
+        alt="main-logo">
       <a href="/home" class="content-center font-extrabold text-orange-600 font-logoFont text-xl">mEvents</a>
     </div>
 
-
-    <!-- The Seacrch div -->
-    <div class="flex rounded-3xl p-1 w-[50%] my-2 border-[1px] border-b-slate-400 overflow-hidden hover:shadow-md">
-      <img class=" size-7 self-center" src="https://img.icons8.com/?size=100&id=XU3XKgdpT0qG&format=png&color=000000"
-        alt="">
-      <input
-        class=" border-r-gray-500 border-[1px] w-full placeholder:text-xs placeholder:pl-3 placeholder:font-semibold placeholder:self-center"
+    <!-- The Search div -->
+    <form action="/search-events" method="post"
+      class="hidden lg:flex rounded-3xl p-1 w-full lg:w-[50%] my-2 border-[1px] border-b-slate-400 overflow-hidden hover:shadow-md">
+      <img class="h-7 w-7 object-contain self-center hidden lg:block" 
+        src="https://img.icons8.com/?size=100&id=XU3XKgdpT0qG&format=png&color=000000" alt="">
+      <input name="eventName"
+        class="border-r-gray-500 border-[1px] w-full placeholder:text-xs placeholder:pl-3 placeholder:font-semibold placeholder:self-center"
         type="text" placeholder="Search events">
-      <input class=" w-full placeholder:text-xs placeholder:pl-3 placeholder:font-semibold placeholder:self-center"
-        type="text" placeholder="Nepal">
-      <img class=" size-7 self-center" src="https://img.icons8.com/?size=100&id=Y6AAeSVIcpWt&format=png&color=FA5252"
-        alt="">
-    </div>
-
+      <input name="eventCountry"
+        class="w-full placeholder:text-xs placeholder:pl-3 placeholder:font-semibold placeholder:self-center"
+        type="text"  placeholder="country">
+      <button class="h-12 w-12 self-center hidden lg:flex items-center justify-center"
+        type="submit">
+        <img class="h-7 w-7 object-contain"
+          src="https://img.icons8.com/?size=100&id=Y6AAeSVIcpWt&format=png&color=FA5252" alt="">
+      </button>
+    </form>
 
     <!-- The menu div -->
-    <div class="flex mx-6 mr-16 px-8 ">
-      <ul class="flex ">
-        <% if(typeof user !== 'undefined' && user !== null){ %>
-        <a href="/favouritesPage/<%=user._id%>" class="nav-items">Favourites</a>
-        <a href="/createEvent/<%=user._id%>" class="nav-items">Create Events </a>
-        <a href="/find-my-tickets/<%=user._id%>" class="nav-items">Find my tickets</a>
-      <%} else { %>
-        <a href="/login" class="nav-items">Favourites</a>
-        <a href="/login" class="nav-items">Create Events </a> 
-        <a href="/login" class="nav-items">Find my tickets</a> 
-
-      <%} %>
-        <a href="#" class="nav-items">Help Center</a>
+    <div id="mobileMenu" class="hidden md:flex flex-col md:flex-row mx-2 md:mx-6 md:mr-16 px-2 md:px-8">
+      <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
+        <% if(typeof user !=='undefined' && user !==null){ %>
+          <a href="/favouritesPage/<%=user._id%>" class="nav-items block">Favourites</a>
+          <a href="/createEvent/<%=user._id%>" class="nav-items block">Create Events </a>
+          <a href="/find-my-tickets/<%=user._id%>" class="nav-items block">Find my tickets</a>
+          <a href="/my-events/<%=user._id%>" class="nav-items block">My Events</a>
+          <%} else { %>
+            <a href="/login" class="nav-items block">Favourites</a>
+            <a href="/login" class="nav-items block">Create Events </a>
+            <a href="/login" class="nav-items block">Find my tickets</a>
+            <a href="/login" class="nav-items block">My Events</a>
+            <%} %>
       </ul>
     </div>
 
-    <% if(typeof user !== 'undefined' && user !== null){ %>
-      <!-- login signup here -->
+    <!-- Desktop profile section (hidden on mobile) -->
+    <% if(typeof user !=='undefined' && user !==null){ %>
       <div
-        class="self-center m-0 h-auto pr-1 rounded-2xl w-auto flex justify-center content-center items-center bg-slate-200 gap-3">
-        <div class="h-9 w-9 flex  content-center justify-center rounded-full overflow-hidden">
-          <img class="object-cover w- h-auto" src="/static/image/gtr.jpg" alt="">
+        class="hidden md:flex self-center m-0 h-auto pr-1 rounded-2xl w-auto content-center items-center bg-slate-200 gap-3">
+        <div class="h-9 w-9 flex content-center justify-center rounded-full overflow-hidden">
+          <img class="object-cover w-full h-auto" src="/static/image/gtr.jpg" alt="">
         </div>
         <h3 class="font-profileFont">
           <%=user.name%>
         </h3>
-
         <div class="relative group">
-
-          <!-- Dropdown Button (Trigger) -->
           <span class="ml-2 cursor-pointer">▼</span>
-
           <div class="absolute right-0">
-            <!-- invisible padding for the hoverable for the options to hover over -->
-
-            <!-- Dropdown Menu -->
-            <div class=" hidden group-hover:block mt-2 w-48 bg-white rounded-lg shadow-lg right-0">
+            <div class="hidden group-hover:block mt-2 w-48 bg-white rounded-lg shadow-lg right-0 z-50">
               <a href="/loggedOut/<%=user._id%>" class="block px-4 py-2 hover:bg-gray-100">log out</a>
               <a href="/login" class="block px-4 py-2 hover:bg-gray-100">Switch Account</a>
               <a href="/my-profile/<%=user._id%>" class="block px-4 py-2 hover:bg-gray-100">My Profile</a>
             </div>
           </div>
-
         </div>
       </div>
-
       <%} else { %>
-          <div class="place-content-center p-2 my-2 rounded-2xl bg-orange-400">
-            <a class="p-2 border-r-[1px] border-black" href="/login">Login</a>
-            <a class="p-2" href="/register">Signup</a>
-          </div>
-
-          <%} %>
+        <div class="hidden md:block place-content-center p-2 rounded-2xl bg-orange-400 w-auto text-center">
+          <a class="p-2 border-r-[1px] border-black" href="/login">Login</a>
+          <a class="p-2" href="/register">Signup</a>
+        </div>
+        <%} %>
 
   </div>
 </header>
+
+<script>
+  const toggleMenu = () => document.getElementById('mobileMenu').classList.toggle('hidden');
+</script>
 <!-- navbar ends here -->

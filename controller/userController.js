@@ -137,16 +137,17 @@ exports.getEventsByCategoryPage = async (req, res) => {
   try {
     const category = req.params.category;
     const country = req.params.country;
-    const categoryEventsByCountry = await EventCategory.getEventsByCategoryAndCountry(category, country);
+    const categoryEventsByCountry =
+      await EventCategory.getEventsByCategoryAndCountry(category, country);
     const user = await User.getLoggedInUser();
     const allUsers = await User.fetchAll();
     res.render("eventsByCategory", {
-    pageTitle: "Events By Category - mEvents",
-    events: categoryEventsByCountry,
-    user: user,
-    allUsers: allUsers,
-    country: country,
-    category: category,
+      pageTitle: "Events By Category - mEvents",
+      events: categoryEventsByCountry,
+      user: user,
+      allUsers: allUsers,
+      country: country,
+      category: category,
     });
   } catch (error) {
     console.error("Error in getEventsByCategoryPage:", error);
@@ -154,5 +155,31 @@ exports.getEventsByCategoryPage = async (req, res) => {
       message: "An error occurred while loading the events by category page",
       pageTitle: "Error",
     });
+  }
+};
+
+exports.getEventsByNamePage = async (req, res) => {
+  try {
+    
+    const eventName = req.body.eventName;
+    const eventCountry = req.body.eventCountry;
+    const eventsByName = await Event.filterEventListByName(
+      eventName,
+      eventCountry
+    );
+    const user = await User.getLoggedInUser();
+    res.render("eventsByName", {
+      events: eventsByName,
+      pageTitle: "Events By Name - mEvents",
+      user: user,
+    });
+  } catch (error) {
+    console.error("Error in getEventsByNamePage:", error);
+    res
+      .status(500)
+      .render("error", {
+        message: "An error occurred while loading the events by name page",
+        pageTitle: "Error",
+      });
   }
 };

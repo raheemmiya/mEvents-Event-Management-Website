@@ -1,7 +1,7 @@
 const express = require("express");
 const Event = require('../model/events')
 
-const { homePage, getOurSponsersPage, getFAQPage, getFavouritesPage, getEventsByCategoryPage } = require("../controller/userController");
+const { homePage, getOurSponsersPage, getFAQPage, getFavouritesPage, getEventsByCategoryPage , getEventsByNamePage} = require("../controller/userController");
 const { registerPage } = require("../controller/userController");
 const { eventDetails } = require("../controller/userController");
 const { registerUser } = require("../controller/userController");
@@ -19,5 +19,6 @@ userRouter.get('/our-sponsers', getOurSponsersPage)
 userRouter.get('/FAQs',getFAQPage)
 userRouter.post('/home', homePage)
 userRouter.get('/eventsByCategory/:category/:country', getEventsByCategoryPage)
+userRouter.post('/search-events', getEventsByNamePage)
 
 module.exports = userRouter;

@@ -229,5 +229,9 @@ exports.spotAdded = async (req, res) => {
 };
 
 
-
-
+exports.getMyEventsPage = async (req, res) => {
+  const userId = req.params.userId;
+  const user = await User.getUserById(userId);
+  const events = user.createdEvents;
+  res.render('my-events', { pageTitle: 'My Events - mEvents', user: user, events: events });
+};

@@ -14,12 +14,12 @@ class Favourite {
         .collection("favourites")
         .findOne({ userId: this.userId, eventId: this.eventId });
       if (existingFav) {
-        console.log("fav already exists");
+        console.error("fav already exists");
         return;
       }
       await _db.collection("favourites").insertOne(this);
     } catch (error) {
-      console.log("Error while adding to Favouorites");
+      console.error("Error while adding to Favouorites");
     }
   }
 
@@ -32,7 +32,7 @@ class Favourite {
         .toArray();
       return favouritesList;
     } catch (error) {
-      console.log("Error while adding to Favouorites");
+      console.error("Error while adding to Favouorites");
     }
   }
 }

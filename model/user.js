@@ -22,8 +22,13 @@ class User {
 
   // Database connection helper
   static async getCollection() {
-    const db = getDb();
-    return db.collection(this.COLLECTION_NAME);
+    try {
+      const db = getDb();
+      return db.collection(this.COLLECTION_NAME);
+    } catch (error) {
+      console.error("Error getting collection:", error);
+      throw error;
+    }
   }
 
   // Authentication Methods
@@ -45,8 +50,13 @@ class User {
   }
 
   static async fetchAll() {
-    const collection = await this.getCollection();
-    return await collection.find({}).toArray();
+    try {
+      const collection = await this.getCollection();
+      return await collection.find({}).toArray();
+    } catch (error) {
+      console.error("Error in fetchAll:", error);
+      throw error;
+    }
   } 
 
   static async findUser({ email, password }) {
@@ -134,8 +144,13 @@ class User {
   }
   // Favorite Events Management
   static async checkFav(userId, eventId) {
-    const favourites = await this.getFavouritesById(userId);
-    return favourites.some(fav => fav._id.toString() === eventId.toString());
+    try {
+      const favourites = await this.getFavouritesById(userId);
+      return favourites.some(fav => fav._id.toString() === eventId.toString());
+    } catch (error) {
+      console.error("Error in checkFav:", error);
+      throw error;
+    }
   }
   static async addToFav(userId, eventId) {
     try {

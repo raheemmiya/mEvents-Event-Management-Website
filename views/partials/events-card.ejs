@@ -2,13 +2,15 @@
 <div class="bg-white rounded-lg shadow-md overflow-hidden group">
     <div class="relative">
         <img src="/api/placeholder/400/200" alt="Event 1" class="w-full h-48 object-cover">
-        <form action="/favourites/delete/<%=user._id%>/<%=event._id%>" method="POST" class="absolute top-4 right-4">
-            <button type="submit" class="h-8 w-8 text-red-500 bg-white rounded-full p-1 shadow-md flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
+            <form action="/<%=context%>/delete/<%=user._id%>/<%=event._id%>" method="POST" class="absolute top-4 right-4">
+            <button type="submit"
+                class="h-8 w-8 text-red-500 bg-white rounded-full p-1 shadow-md flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    class="h-6 w-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
             </button>
-          </form>
+        </form>
     </div>
     <div class="p-6">
         <span class="text-sm text-orange-500">
@@ -17,7 +19,7 @@
         <h3 class="text-xl font-bold mb-2">
             <%= event.eventName %>
         </h3>
-        <p class="text-gray-600 mb-4">
+        <p class="text-gray-600 mb-4 line-clamp-4">
             <%= event.description %>
         </p>
         <div class="flex items-center justify-between">
@@ -29,8 +31,10 @@
             </div>
             <span class="text-orange-500 font-semibold">by: <%= user.name %></span>
         </div>
-        <button class="w-full mt-4 bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600">
-            Get Tickets
-        </button>
+        <form action="/event-details/<%=event._id%>" method="post">
+            <button class="w-full mt-4 bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600">
+                Event Details
+            </button>
+        </form>
     </div>
 </div>

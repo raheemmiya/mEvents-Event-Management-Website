@@ -31,7 +31,6 @@ class Event {
   async createEvent() {
     try {
       const _db = getEventDb();
-      console.log(this);
       return await _db.collection("events").insertOne(this);
     } catch (error) {
       console.log("Error while creating the event: ", error);
@@ -44,17 +43,16 @@ class Event {
 
       return await _db.collection("events").find({}).toArray();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
   static async getEventById(id) {
     try {
       const _db = getEventDb();
-      console.log(id);
       return await _db.collection("events").findOne({ _id: new ObjectId(id) });
     } catch (err) {
-      console.log("Error while getting the event using ID", err);
+      console.error("Error while getting the event using ID", err);
     }
   }
   static async fetchByCountryName(countryName){ 
@@ -91,7 +89,7 @@ class Event {
       const allEvents = await _db.collection('events').find({}).toArray();
       const eventList= [];
       allEvents.forEach(event => {
-        if (event.country == countryName) {
+        if (event.country.toLowerCase() == countryName.toLowerCase()) {
           eventList.push(event)
         }
       });
@@ -102,9 +100,40 @@ class Event {
     }
   }
 
-  
+  static async filterEventListByName(eventName, eventCountry){ 
+    try {
+      const allEvents = await Event.getAllEventByCountry(eventCountry);
+      const eventList = [];
+      allEvents.forEach(event => {
+        if (event.eventName.toLowerCase().includes(eventName.toLowerCase())) {
+          eventList.push(event);
+        }
+      });
 
-  
+      return eventList;
+    } catch (error) {
+      console.error("Error while fetching the event database using country name", error);
+    }
+  }
+
+  static async deleteEvent(eventId){
+    try {
+      const _db = getEventDb();
+      // await _db.collection('events').deleteOne({_id: new ObjectId(eventId)});
+      
+      //to delete the event from the eventCategory collection
+      const event = await _db.collection('events').findOne({_id: new ObjectId(eventId)});
+      console.log(event);
+      const eventCategory = event.category;
+      await _db.collection('eventCategory').deleteOne({category:eventCategory, events:{$in:[event]}});
+        
+      
+      //to delete the event from the user collection
+      await _db.collection('user').updateOne({_id: new ObjectId(eventCategory.createdBy)}, {$pull: {createdEvents: new ObjectId(eventId)}});
+    } catch (error) {
+      console.error("Error while deleting the event", error);
+    }
+  }
 }
 
 module.exports = Event;
